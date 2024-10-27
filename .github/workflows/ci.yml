@@ -22,38 +22,40 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
+      # Set up Node.js with caching for pnpm
+      - name: Setup Node.js with pnpm Cache
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'  # Link to lockfile
 
+      # Install pnpm
       - name: Install pnpm
         run: npm install -g pnpm@9.12.2
 
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
+      # Install dependencies
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      # Install Playwright Browsers
       - name: Install Playwright Browsers
         run: pnpm exec playwright install
 
+      # Run Nx Affected Tasks
       - name: Run Nx Affected Tasks
         run: pnpm exec nx affected -t lint test build
 
+      # Start Application
       - name: Start Application
         run: pnpm exec nx run riffroll:preview &
         env:
           CI: true
 
+      # Wait for Application to be Ready
       - name: Wait for Application to be Ready
         run: npx wait-on http://localhost:4300
 
+      # Run E2E Tests
       - name: Run E2E Tests
         run: pnpm exec nx affected -t e2e
