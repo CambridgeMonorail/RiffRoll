@@ -1,14 +1,10 @@
-import styled from 'tailwind';
-
-const StyledUi = styled.div`
-  color: pink;
-`;
+import React from 'react';
 
 export function Ui() {
   return (
-    <StyledUi>
+    <div className="text-pink-500">
       <h1>Welcome to Ui!</h1>
-    </StyledUi>
+    </div>
   );
 }
 

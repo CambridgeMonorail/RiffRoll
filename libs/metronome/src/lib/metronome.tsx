@@ -1,14 +1,10 @@
-import styled from 'tailwind';
-
-const StyledMetronome = styled.div`
-  color: pink;
-`;
+import React from 'react';
 
 export function Metronome() {
   return (
-    <StyledMetronome>
+    <div className="text-pink-500">
       <h1>Welcome to Metronome!</h1>
-    </StyledMetronome>
+    </div>
   );
 }
 

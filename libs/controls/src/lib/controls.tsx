@@ -1,14 +1,10 @@
-import styled from 'tailwind';
-
-const StyledControls = styled.div`
-  color: pink;
-`;
+import React from 'react';
 
 export function Controls() {
   return (
-    <StyledControls>
+    <div className="text-pink-500">
       <h1>Welcome to Controls!</h1>
-    </StyledControls>
+    </div>
   );
 }
 

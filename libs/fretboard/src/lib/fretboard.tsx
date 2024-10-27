@@ -1,14 +1,10 @@
-import styled from 'tailwind';
-
-const StyledFretboard = styled.div`
-  color: pink;
-`;
+import React from 'react';
 
 export function Fretboard() {
   return (
-    <StyledFretboard>
+    <div className="text-pink-500">
       <h1>Welcome to Fretboard!</h1>
-    </StyledFretboard>
+    </div>
   );
 }
 
