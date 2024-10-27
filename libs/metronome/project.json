@@ -1,0 +1,9 @@
+{
+  "name": "metronome",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/metronome/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project metronome --web",
+  "targets": {}
+}
