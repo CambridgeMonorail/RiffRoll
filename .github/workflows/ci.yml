@@ -18,16 +18,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Install and setup pnpm
-      - uses: pnpm/action-setup@v2.2.1
-        with:
-          version: 7.0 # specify the pnpm version
-
-      # Setup Node.js and cache pnpm
+      # Set up Node.js with Node v22 and install pnpm
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22  # Update to Node.js v22
           cache: 'pnpm'
+
+      # Install pnpm (latest compatible version)
+      - name: Install pnpm
+        run: npm install -g pnpm@9.12.2  
 
       # Install dependencies
       - name: Install Dependencies
