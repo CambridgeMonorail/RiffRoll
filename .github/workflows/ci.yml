@@ -21,7 +21,7 @@ jobs:
       # Set up Node.js with Node v22 and install pnpm
       - uses: actions/setup-node@v4
         with:
-          node-version: 22  # Update to Node.js v22
+          node-version: 22 
           cache: 'pnpm'
 
       # Install pnpm (latest compatible version)
