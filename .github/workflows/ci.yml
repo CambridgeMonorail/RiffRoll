@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:  
+  workflow_dispatch:  # Allows manual triggering
 
 permissions:
   actions: read
@@ -17,34 +17,38 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Set up Node.js with Node v22 and install pnpm
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22 
-          cache: 'pnpm'
 
-      # Install pnpm (latest compatible version)
       - name: Install pnpm
         run: npm install -g pnpm@9.12.2  
 
-      # Install dependencies
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      # Install additional testing tools
       - name: Install Cypress
         run: pnpm exec cypress install
 
       - name: Install Playwright
         run: pnpm exec playwright install
 
-      # Set up affected SHAs for Nx
-      - uses: nrwl/nx-set-shas@v4
+      - name: Set up Nx SHAs
+        uses: nrwl/nx-set-shas@v4
 
-      # Run affected Nx tasks
-      - name: Nx Affected Tasks
+      - name: Run Nx Affected Tasks
         run: pnpm exec nx affected -t lint test build e2e
