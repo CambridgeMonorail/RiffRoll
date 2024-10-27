@@ -27,7 +27,7 @@ jobs:
         run: npm install -g pnpm@9.12.2
 
       - name: Cache pnpm dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -40,8 +40,20 @@ jobs:
       - name: Build Project
         run: pnpm exec nx build riffroll --prod
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v3
+      # Upload artifact for deployment
+      - name: Upload to GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist/apps/riffroll
+          path: dist/apps/riffroll  # Path to your build output
+
+  # Deploy step (separate job for GitHub Pages deployment)
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write  # Required for deployment to GitHub Pages
+      id-token: write
+
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
