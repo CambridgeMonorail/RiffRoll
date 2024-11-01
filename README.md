@@ -1,6 +1,6 @@
 # RiffRoll
 
-![Version](https://img.shields.io/github/package-json/v/CambridgeMonorail/RiffRoll?style=for-the-badge)![Build Status](https://img.shields.io/github/actions/workflow/status/CambridgeMonorail/RiffRoll/ci.yml?style=for-the-badge)
+![Project Status](https://img.shields.io/badge/status-alpha-orange?style=for-the-badge)![Version](https://img.shields.io/github/package-json/v/CambridgeMonorail/RiffRoll?style=for-the-badge)![Build Status](https://img.shields.io/github/actions/workflow/status/CambridgeMonorail/RiffRoll/ci.yml?style=for-the-badge)
 ![License](https://img.shields.io/github/license/CambridgeMonorail/RiffRoll?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/CambridgeMonorail/RiffRoll?style=for-the-badge)
 
@@ -45,7 +45,7 @@ We appreciate your interest and contributions to the project. Your feedback and 
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
 ## Installation
 
