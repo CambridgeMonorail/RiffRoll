@@ -2,7 +2,21 @@
   "name": "@react-monorepo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx serve riffroll",
+    "build": "nx build riffroll",
+    "test": "nx test riffroll",
+    "lint": "nx lint riffroll",
+    "e2e": "nx e2e riffroll",
+    "format": "nx format:write",
+    "format:check": "nx format:check",
+    "affected:apps": "nx affected:apps",
+    "affected:libs": "nx affected:libs",
+    "affected:build": "nx affected:build",
+    "affected:test": "nx affected:test",
+    "affected:lint": "nx affected:lint",
+    "affected:e2e": "nx affected:e2e"
+  },
   "private": true,
   "dependencies": {
     "react": "18.3.1",
