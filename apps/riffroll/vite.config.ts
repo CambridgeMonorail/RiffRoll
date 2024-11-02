@@ -6,7 +6,7 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig({
   root: __dirname,
-  base: '/RiffRoll/',
+  base: process.env.NODE_ENV === 'production' ? '/RiffRoll/' : '/',
   cacheDir: '../../node_modules/.vite/apps/riffroll',
   server: {
     port: 4200,
