@@ -1,9 +1,9 @@
-import NxWelcome from './nx-welcome';
+import Landing from './landing';
 
 export function App() {
   return (
     <div>
-      <NxWelcome title="riffroll" />
+      <Landing title="riffroll" />
     </div>
   );
 }
