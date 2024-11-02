@@ -37,8 +37,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build Project
-        run: pnpm exec nx build riffroll --prod
+      run: pnpm exec nx build riffroll --configuration=production
 
       # Upload artifact for deployment
       - name: Upload to GitHub Pages artifact
