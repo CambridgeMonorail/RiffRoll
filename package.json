@@ -10,7 +10,7 @@
     "affected:lint": "nx affected:lint",
     "affected:test": "nx affected:test",
     "build:all": "nx run-many --target=build --all",
-    "build": "nx build riffroll",
+    "build": "nx build riffroll --configuration=production",
     "e2e": "nx e2e riffroll",
     "format:check": "nx format:check",
     "format": "nx format:write",
