@@ -3,24 +3,30 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve riffroll",
-    "build": "nx build riffroll",
-    "test": "nx test riffroll",
-    "lint": "nx lint riffroll",
-    "e2e": "nx e2e riffroll",
-    "format": "nx format:write",
-    "format:check": "nx format:check",
     "affected:apps": "nx affected:apps",
-    "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
-    "affected:test": "nx affected:test",
+    "affected:e2e": "nx affected:e2e",
+    "affected:libs": "nx affected:libs",
     "affected:lint": "nx affected:lint",
-    "affected:e2e": "nx affected:e2e"
+    "affected:test": "nx affected:test",
+    "build:all": "nx run-many --target=build --all",
+    "build": "nx build riffroll",
+    "e2e": "nx e2e riffroll",
+    "format:check": "nx format:check",
+    "format": "nx format:write",
+    "lint": "nx lint riffroll",
+    "start": "nx serve riffroll",
+    "test": "nx test riffroll"
   },
   "private": true,
   "dependencies": {
+    "@radix-ui/react-icons": "^1.3.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",

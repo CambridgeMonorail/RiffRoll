@@ -41,7 +41,7 @@ jobs:
         run: pnpm exec nx build riffroll --prod
 
       - name: Update base href for GitHub Pages
-        run: sed -i 's|<base href="/" />|<base href="/RiffRoll/" />|' dist/apps/riffroll/index.html
+        run: sed -i 's|<base href="/" />|<base href="/RiffRoll" />|' dist/apps/riffroll/index.html
 
       # Upload artifact for deployment
       - name: Upload to GitHub Pages artifact
