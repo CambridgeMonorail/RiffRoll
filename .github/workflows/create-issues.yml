@@ -1,0 +1,87 @@
+name: Create Issues from Markdown
+
+on:
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Ensure jq is installed
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      # Parse the Markdown file and create issues
+      - name: Parse Markdown and Create Issues
+        run: |
+          # Path to the tasks file
+          FILE_PATH="docs/tasks.md" # Ensure the correct path
+
+          # Variables to track the current parent task and its subtasks
+          parent_task=""
+          subtasks=""
+
+          # Function to check if an issue already exists
+          issue_exists() {
+            local title="$1"
+            curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/issues" | \
+              jq -e ".[] | select(.title == \"$title\")" > /dev/null
+            if [ $? -eq 0 ]; then
+              return 0
+            else
+              return 1
+            fi
+          }
+
+          # Read each line of the file
+          while IFS= read -r line || [ -n "$line" ]; do # Handle different line endings
+            # Check for parent task (- [ ])
+            if echo "$line" | grep -q '^- \[ \]'; then
+              # If there's an existing parent task, create its issue first
+              if [ ! -z "$parent_task" ]; then
+                body="### Subtasks\n$subtasks"
+                if ! issue_exists "$parent_task"; then
+                  echo "Creating issue: $parent_task"
+                  curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                    -H "Accept: application/vnd.github+json" \
+                    https://api.github.com/repos/${{ github.repository }}/issues \
+                    -d "{\"title\": \"$parent_task\", \"body\": \"$body\"}" || echo "Failed to create issue for $parent_task" # Add error handling
+                else
+                  echo "Issue already exists: $parent_task"
+                fi
+
+                # Reset subtasks for the next parent task
+                subtasks=""
+              fi
+
+              # Set the new parent task
+              parent_task=$(echo "$line" | sed -n 's/- \[ \] //p')
+
+            # Check for subtask (indented - [ ])
+            elif echo "$line" | grep -q '^  - \[ \]'; then
+              # Append the subtask to the subtasks list
+              subtask=$(echo "$line" | sed -n 's/  - \[ \] //p')
+              subtasks="${subtasks}- [ ] $subtask\n"
+            fi
+          done < "$FILE_PATH"
+
+          # Create the last parent task issue (if any)
+          if [ ! -z "$parent_task"; then
+            body="### Subtasks\n$subtasks"
+            if ! issue_exists "$parent_task"; then
+              echo "Creating issue: $parent_task"
+              curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -H "Accept: application/vnd.github+json" \
+                https://api.github.com/repos/${{ github.repository }}/issues \
+                -d "{\"title\": \"$parent_task\", \"body\": \"$body\"}" || echo "Failed to create issue for $parent_task" # Add error handling
+            else
+              echo "Issue already exists: $parent_task"
+            fi
+          fi
