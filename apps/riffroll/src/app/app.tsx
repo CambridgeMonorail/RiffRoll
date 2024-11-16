@@ -1,10 +1,12 @@
-import Landing from './landing';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import HomeScreen from './HomeScreen';
 
 export function App() {
   return (
-    <div>
-      <Landing title="riffroll" />
-    </div>
+    <Router>
+      <HomeScreen />
+    </Router>
   );
 }
 
