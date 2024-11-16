@@ -44,12 +44,35 @@ The RiffRoll Guitar Practice App is designed to help guitarists practice effecti
 
 - **Start Button**:
   - Begins the practice session, starting the fretboard animation and metronome.
+  - Triggers the `onStart` function passed as a prop.
 - **Stop Button**:
   - Stops both the fretboard animation and metronome.
   - Resets the session to the starting position.
+  - Triggers the `onStop` function passed as a prop.
 - **Pause Button**:
   - Pauses the fretboard animation and metronome sound.
   - Option to resume from the paused point.
+  - Triggers the `onPause` function passed as a prop.
+- **ControlPanel Component**:
+  - **Props**:
+    - `onStart`: Function to handle the start action.
+    - `onStop`: Function to handle the stop action.
+    - `onPause`: Function to handle the pause action.
+    - `isPlaying`: Boolean indicating if the session is currently playing.
+  - **UI Elements**:
+    - Start Button: Triggers the `onStart` function.
+    - Stop Button: Triggers the `onStop` function.
+    - Pause Button: Triggers the `onPause` function.
+    - Icons or labels to indicate the current state (e.g., play icon when paused).
+  - **Styling**:
+    - Use Tailwind CSS for responsive design.
+    - Ensure buttons are accessible and have clear visual states (e.g., active, disabled).
+  - **Event Handling**:
+    - Attach event handlers to buttons for start, stop, and pause actions.
+    - Update button states based on the `isPlaying` prop.
+  - **Accessibility**:
+    - Include keyboard shortcuts for controlling the session (e.g., space for play/pause).
+    - Ensure buttons are focusable and have appropriate ARIA labels.
 
 ## Non-Functional Requirements
 

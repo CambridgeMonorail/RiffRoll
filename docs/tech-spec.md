@@ -102,6 +102,29 @@ riffroll/
   - **Volume Control**: Adjusts metronome volume.
   - **Display**: Current state indication (e.g., icon change for play vs pause).
 - **State Management**: Context API or Zustand for session state persistence.
+- **Detailed Implementation**:
+  - **ControlPanel Component**:
+    - **Props**:
+      - `onStart`: Function to handle the start action.
+      - `onStop`: Function to handle the stop action.
+      - `onPause`: Function to handle the pause action.
+      - `isPlaying`: Boolean indicating if the session is currently playing.
+    - **State**:
+      - Local state to manage button states (e.g., active/inactive).
+    - **UI Elements**:
+      - Start Button: Triggers the `onStart` function.
+      - Stop Button: Triggers the `onStop` function.
+      - Pause Button: Triggers the `onPause` function.
+      - Icons or labels to indicate the current state (e.g., play icon when paused).
+    - **Styling**:
+      - Use Tailwind CSS for responsive design.
+      - Ensure buttons are accessible and have clear visual states (e.g., active, disabled).
+    - **Event Handling**:
+      - Attach event handlers to buttons for start, stop, and pause actions.
+      - Update button states based on the `isPlaying` prop.
+    - **Accessibility**:
+      - Include keyboard shortcuts for controlling the session (e.g., space for play/pause).
+      - Ensure buttons are focusable and have appropriate ARIA labels.
 
 ---
 
