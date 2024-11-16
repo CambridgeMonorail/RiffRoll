@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useNavigate } from 'react-router-dom';
 
 const HomeScreen = () => {
   const [tempo, setTempo] = useState(120);
   const [chordProgression, setChordProgression] = useState('C G Am F');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleStartPractice = () => {
-    history.push('/practice');
+    navigate('/practice');
   };
 
   return (
