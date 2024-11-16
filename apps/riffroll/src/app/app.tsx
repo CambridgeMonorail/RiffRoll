@@ -1,9 +1,9 @@
-import Landing from './landing';
+import HomeScreen from './HomeScreen';
 
 export function App() {
   return (
     <div>
-      <Landing title="riffroll" />
+      <HomeScreen />
     </div>
   );
 }
