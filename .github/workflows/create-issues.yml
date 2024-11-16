@@ -25,6 +25,7 @@ jobs:
           # Variables to track the current parent task and its subtasks
           parent_task=""
           subtasks=""
+          sub_subtasks=""
 
           # Function to check if an issue already exists
           issue_exists() {
@@ -33,11 +34,7 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               "https://api.github.com/repos/${{ github.repository }}/issues" | \
               jq -e ".[] | select(.title == \"$title\")" > /dev/null
-            if [ $? -eq 0 ]; then
-              return 0
-            else
-              return 1
-            fi
+            return $?
           }
 
           # Read each line of the file
@@ -66,14 +63,31 @@ jobs:
 
             # Check for subtask (indented - [ ])
             elif echo "$line" | grep -q '^  - \[ \]'; then
+              # If there's an existing subtask, append sub-subtasks to it
+              if [ ! -z "$sub_subtasks" ]; then
+                subtasks="${subtasks}- [ ] $subtask\n$sub_subtasks"
+                sub_subtasks=""
+              fi
+
               # Append the subtask to the subtasks list
               subtask=$(echo "$line" | sed -n 's/  - \[ \] //p')
               subtasks="${subtasks}- [ ] $subtask\n"
+
+            # Check for sub-subtask (double-indented - [ ])
+            elif echo "$line" | grep -q '^    - \[ \]'; then
+              # Append the sub-subtask to the sub-subtasks list
+              sub_subtask=$(echo "$line" | sed -n 's/    - \[ \] //p')
+              sub_subtasks="${sub_subtasks}    - [ ] $sub_subtask\n"
             fi
           done < "$FILE_PATH"
 
           # Create the last parent task issue (if any)
           if [ ! -z "$parent_task"; then
+            # Append any remaining sub-subtasks to the last subtask
+            if [ ! -z "$sub_subtasks" ]; then
+              subtasks="${subtasks}- [ ] $subtask\n$sub_subtasks"
+            fi
+
             body="### Subtasks\n$subtasks"
             if ! issue_exists "$parent_task"; then
               echo "Creating issue: $parent_task"
